@@ -11,6 +11,7 @@ import {
 
 import { Header } from 'react-native-elements';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 type state = {
     hasCameraPermissions: any,
@@ -58,39 +59,43 @@ export default class ScanScreen extends React.Component<props, state> {
         const buttonState = this.state.buttonState;
         if (buttonState === 'clicked' && hasCameraPermissions) {
             return (
-                <BarCodeScanner
-                    onBarCodeScanned={scanned ? undefined : this.handleBarCodeScanned}
-                    style={StyleSheet.absoluteFillObject}
-                />
+                <SafeAreaProvider>
+                    <BarCodeScanner
+                        onBarCodeScanned={scanned ? undefined : this.handleBarCodeScanned}
+                        style={StyleSheet.absoluteFillObject}
+                    />
+                </SafeAreaProvider>
             )
         }
         else if (buttonState === 'normal') {
             return (
-                <View style={{ marginTop: 25 }}>
-                    <Header
-                        centerComponent={{ text: 'Barcode Scanner', style: { fontSize: 20 } }}
-                    />
+                <SafeAreaProvider>
+                    <View style={{ marginTop: 25 }}>
+                        <Header
+                            centerComponent={{ text: 'Barcode Scanner', style: { fontSize: 20 } }}
+                        />
 
-                    <Image
-                        style={{
-                            width: 150,
-                            height: 150,
-                            margin: 25,
-                            alignSelf: 'center'
-                        }}
-                        source={
-                            require('../assets/img.jpg')
-                        }
-                    />
+                        <Image
+                            style={{
+                                width: 150,
+                                height: 150,
+                                margin: 25,
+                                alignSelf: 'center'
+                            }}
+                            source={
+                                require('../assets/img.jpg')
+                            }
+                        />
 
-                    <Text style={{ fontSize: 20, alignSelf: 'center' }}>{
-                        hasCameraPermissions === true ? this.state.scannedData : "Request Camera Permission"
-                    }</Text>
+                        <Text style={{ fontSize: 20, alignSelf: 'center' }}>{
+                            hasCameraPermissions === true ? this.state.scannedData : "Request Camera Permission"
+                        }</Text>
 
-                    <TouchableOpacity style={{ backgroundColor: 'cyan', margin: 20, padding: 15 }} onPress={this.getCameraPermissions}>
-                        <Text style={{ fontSize: 20, alignSelf: 'center' }}>Scan QR code</Text>
-                    </TouchableOpacity>
-                </View>
+                        <TouchableOpacity style={{ backgroundColor: 'cyan', margin: 20, padding: 15 }} onPress={this.getCameraPermissions}>
+                            <Text style={{ fontSize: 20, alignSelf: 'center' }}>Scan QR code</Text>
+                        </TouchableOpacity>
+                    </View>
+                </SafeAreaProvider>
             );
         }
     }
