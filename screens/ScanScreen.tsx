@@ -1,7 +1,15 @@
 import * as React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import { Header } from 'react-native-elements';
 import * as Permissions from 'expo-permissions';
+
+import { 
+    View, 
+    Text, 
+    TouchableOpacity, 
+    StyleSheet, 
+    Image
+} from 'react-native';
+    
+import { Header } from 'react-native-elements';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
 type state = {
